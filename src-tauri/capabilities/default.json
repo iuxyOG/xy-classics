@@ -1,0 +1,16 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Capability for the main window — Phase 0 baseline grants default permissions for the seven registered plugins.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "shell:default",
+    "fs:default",
+    "dialog:default",
+    "os:default",
+    "process:default",
+    "store:default",
+    "sql:default"
+  ]
+}

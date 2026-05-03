@@ -1,0 +1,48 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+dist-ssr
+*.local
+*.tsbuildinfo
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor / OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test / coverage
+coverage
+.vitest_cache
+
+# Husky generated dir (.husky/* hook scripts are tracked, .husky/_/ is generated)
+.husky/_
+
+# Backup / temp
+*.bak
+*.tmp
+
+# Tauri (mirrors src-tauri/.gitignore for safety when running cargo from root)
+src-tauri/target
+src-tauri/gen/schemas
