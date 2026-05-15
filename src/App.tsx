@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
+import { getCurrentWindow } from "@tauri-apps/api/window";
+
 import { CruzPatea } from "@/components/sigils/CruzPatea";
 
 interface EmberProps {
@@ -34,17 +37,32 @@ function Ember({ leftPct, delay, duration = 14 }: EmberProps) {
   );
 }
 
-const TAGLINE_EN = "Where games never die.";
-const TAGLINE_PT = "Onde jogos nunca morrem.";
-
 function App() {
-  const [taglineHover, setTaglineHover] = useState(false);
+  const { t, i18n } = useTranslation();
   const [showK, setShowK] = useState(false);
 
   useEffect(() => {
-    const handle = window.setTimeout(() => setShowK(true), 6000);
-    return () => window.clearTimeout(handle);
-  }, []);
+    const updateMeta = () => {
+      const title =
+        i18n.language === "pt"
+          ? "XY Classics — Onde jogos nunca morrem"
+          : "XY Classics — Where games never die";
+      document.documentElement.lang = i18n.language;
+      document.title = title;
+      if (typeof window !== "undefined" && "__TAURI_INTERNALS__" in window) {
+        void getCurrentWindow().setTitle(title);
+      }
+    };
+    updateMeta();
+    i18n.on("languageChanged", updateMeta);
+    return () => {
+      i18n.off("languageChanged", updateMeta);
+    };
+  }, [i18n]);
+
+  const toggleLanguage = () => {
+    void i18n.changeLanguage(i18n.language === "pt" ? "en" : "pt");
+  };
 
   return (
     <main className="bg-background text-foreground relative isolate min-h-dvh w-full overflow-hidden">
@@ -71,7 +89,7 @@ function App() {
 
       <div className="relative z-10 flex min-h-dvh flex-col items-center justify-center px-6 text-center">
         <p className="text-muted-foreground mb-4 font-mono text-[11px] tracking-[0.4em] uppercase">
-          xy.classics &nbsp;·&nbsp; phase 0
+          {t("hello.eyebrow")}
         </p>
 
         <motion.h1
@@ -84,24 +102,25 @@ function App() {
           XY CLASSICS
         </motion.h1>
 
-        <div
-          className="mt-3 h-7 cursor-default"
-          onMouseEnter={() => setTaglineHover(true)}
-          onMouseLeave={() => setTaglineHover(false)}
+        <button
+          type="button"
+          onClick={toggleLanguage}
+          aria-label={t("common.languageToggle")}
+          className="group focus-visible:ring-ring mt-3 h-7 cursor-pointer rounded-md px-2 py-1 transition-transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2"
         >
           <AnimatePresence mode="wait">
-            <motion.p
-              key={taglineHover ? "pt" : "en"}
+            <motion.span
+              key={i18n.language}
               initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -4 }}
               transition={{ duration: 0.4 }}
-              className="text-bone/80 font-serif text-lg italic"
+              className="text-bone/80 inline-block font-serif text-lg italic"
             >
-              {taglineHover ? TAGLINE_PT : TAGLINE_EN}
-            </motion.p>
+              {t("hello.tagline")}
+            </motion.span>
           </AnimatePresence>
-        </div>
+        </button>
 
         <motion.div
           initial={{ opacity: 0 }}
@@ -110,11 +129,11 @@ function App() {
           className="text-muted-foreground mt-10 flex items-center gap-3 font-mono text-[11px] tracking-[0.25em] uppercase"
         >
           <span className="bg-ember inline-block h-1.5 w-1.5 animate-pulse rounded-full" />
-          <span>scaffold.complete</span>
+          <span>{t("hello.status.scaffold")}</span>
           <span className="text-border-strong">·</span>
-          <span>v0.0.1</span>
+          <span>{t("hello.status.version")}</span>
           <span className="text-border-strong">·</span>
-          <span>tauri 2 / react 19</span>
+          <span>{t("hello.status.stack")}</span>
         </motion.div>
 
         <motion.p
@@ -123,8 +142,7 @@ function App() {
           transition={{ delay: 2.4, duration: 1.2 }}
           className="text-muted-foreground mt-12 max-w-md text-sm leading-relaxed"
         >
-          The vault is sealed. Catalog, emulators, and saves arrive in upcoming phases. For now — a
-          single, quiet ember.
+          {t("hello.description")}
         </motion.p>
       </div>
 
@@ -134,12 +152,12 @@ function App() {
         transition={{ delay: 3, duration: 1 }}
         className="text-muted-foreground/60 absolute inset-x-0 bottom-4 z-10 text-center font-mono text-[10px] tracking-[0.3em] uppercase"
       >
-        gpl-3.0 &nbsp;·&nbsp; iuxyog &nbsp;·&nbsp; 2026
+        {t("hello.footer")}
       </motion.footer>
 
       <button
         type="button"
-        aria-label="XY Classics sigil"
+        aria-label={t("common.sigilLabel")}
         className="text-vasco-cross/60 hover:text-primary focus-visible:ring-ring absolute top-4 right-4 z-20 rounded-md p-1.5 transition-colors focus:outline-none focus-visible:ring-2"
         onClick={() => setShowK((prev) => !prev)}
       >

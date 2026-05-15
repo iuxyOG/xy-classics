@@ -15,10 +15,18 @@ import "@fontsource/jetbrains-mono/500.css";
 import "@fontsource/unifrakturmaguntia/400.css";
 
 import "./globals.css";
+import "./i18n/types";
 import App from "./App";
+import { initI18n } from "./i18n";
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-);
+async function bootstrap() {
+  await initI18n();
+
+  ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+  );
+}
+
+void bootstrap();

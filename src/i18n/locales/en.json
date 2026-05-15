@@ -1,0 +1,17 @@
+{
+  "hello": {
+    "eyebrow": "xy.classics · phase 0",
+    "tagline": "Where games never die.",
+    "status": {
+      "scaffold": "scaffold.complete",
+      "version": "v0.0.1",
+      "stack": "tauri 2 / react 19"
+    },
+    "description": "The vault is sealed. Catalog, emulators, and saves arrive in upcoming phases. For now — a single, quiet ember.",
+    "footer": "gpl-3.0 · iuxyog · 2026"
+  },
+  "common": {
+    "languageToggle": "Switch language to portuguese",
+    "sigilLabel": "XY Classics sigil"
+  }
+}

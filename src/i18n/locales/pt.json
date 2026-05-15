@@ -1,0 +1,17 @@
+{
+  "hello": {
+    "eyebrow": "xy.classics · fase 0",
+    "tagline": "Onde jogos nunca morrem.",
+    "status": {
+      "scaffold": "estrutura.completa",
+      "version": "v0.0.1",
+      "stack": "tauri 2 / react 19"
+    },
+    "description": "O cofre está selado. Catálogo, emuladores e saves chegam nas próximas fases. Por enquanto — uma única e silenciosa brasa.",
+    "footer": "gpl-3.0 · iuxyog · 2026"
+  },
+  "common": {
+    "languageToggle": "Trocar idioma para inglês",
+    "sigilLabel": "Sigilo XY Classics"
+  }
+}
